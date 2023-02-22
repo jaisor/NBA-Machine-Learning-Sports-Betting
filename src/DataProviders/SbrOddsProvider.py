@@ -8,12 +8,12 @@ class SbrOddsProvider:
         string: Full location name
     """    
 
-    def __init__(self, sportsbook="fanduel"):
+    def __init__(self, sportsbook="fanduel", date="", sport="NBA"):
         
-        sb = Scoreboard(sport="NBA")
+        sb = Scoreboard(sport=sport, date=date)
         self.games = sb.games if hasattr(sb, 'games') else []
         self.sportsbook = sportsbook
-
+        
     
     def get_odds(self):
         """Function returning odds from Sbr server's json content

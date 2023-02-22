@@ -2,6 +2,7 @@ import argparse
 from colorama import Fore, Style
 import pandas as pd
 import tensorflow as tf
+from datetime import datetime
 from src.Predict import NN_Runner, XGBoost_Runner
 from src.Utils.Dictionaries import team_index_current
 from src.Utils.tools import create_todays_games_from_odds, get_json_data, to_data_frame, get_todays_games_json, create_todays_games
@@ -60,8 +61,13 @@ def createTodaysGames(games, df, odds):
 
 def main():
     odds = None
+    date = None
+    if not args.date:
+        date = datetime.today().strftime("%Y-%m-%d")
+    else:
+        date = args.date
     if args.odds:
-        odds = SbrOddsProvider(sportsbook=args.odds).get_odds()
+        odds = SbrOddsProvider(sportsbook=args.odds, date=args.date, sport=args.sport).get_odds()
         games = create_todays_games_from_odds(odds)
         if len(games) == 0:
             print("No games found.")
@@ -107,5 +113,7 @@ if __name__ == "__main__":
     parser.add_argument('-nn', action='store_true', help='Run with Neural Network Model')
     parser.add_argument('-A', action='store_true', help='Run all Models')
     parser.add_argument('-odds', help='Sportsbook to fetch from. (fanduel, draftkings, betmgm, pointsbet, caesars, wynn, bet_rivers_ny')
+    parser.add_argument('-date', help='Date of the games to fetch. (optional, omit for today)')
+    parser.add_argument('-sport', help='Sport. (NBA, NFL, NHL, MLB, NCAAB)', default="NBA")
     args = parser.parse_args()
     main()
