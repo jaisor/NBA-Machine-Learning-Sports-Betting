@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 from tqdm import tqdm
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
-from Utils.Dictionaries import team_index_07, team_index_08, team_index_12, team_index_13, team_index_14, team_index_current
+from src.Utils.Dictionaries import team_index_07, team_index_08, team_index_12, team_index_13, team_index_14, team_index_current
 
 # season_array = ["2007-08", "2008-09", "2009-10", "2010-11", "2011-12", "2012-13", "2013-14", "2014-15", "2015-16",
 #                 "2016-17", "2017-18", "2018-19", "2019-20", "2020-21", "2021-22", "2022-23"]
@@ -18,8 +18,8 @@ win_margin = []
 OU = []
 OU_Cover = []
 games = []
-teams_con = sqlite3.connect("../../Data/teams.sqlite")
-odds_con = sqlite3.connect("../../Data/odds.sqlite")
+teams_con = sqlite3.connect("./Data/teams.sqlite")
+odds_con = sqlite3.connect("./Data/odds.sqlite")
 
 for season in tqdm(season_array):
     odds_df = pd.read_sql_query(f"select * from \"odds_{season}\"", odds_con, index_col="index")
@@ -108,6 +108,6 @@ for field in frame.columns.values:
     if 'TEAM_' in field  or 'Date' in field or field not in frame:
         continue
     frame[field] = frame[field].astype(float)
-con = sqlite3.connect("../../Data/dataset.sqlite")
+con = sqlite3.connect("./Data/dataset.sqlite")
 frame.to_sql("dataset_2012-23", con, if_exists="replace")
 con.close()

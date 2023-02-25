@@ -8,7 +8,7 @@ from datetime import date, datetime, timedelta
 from tqdm import tqdm
 
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
-from Utils.tools import get_json_data, to_data_frame
+from src.Utils.tools import get_json_data, to_data_frame
 
 url = 'https://stats.nba.com/stats/' \
       'leaguedashteamstats?Conference=&' \
@@ -36,7 +36,7 @@ end_year_pointer = year[0]
 count = 0
 year_count = 0
 
-con = sqlite3.connect("../../Data/teams.sqlite")
+con = sqlite3.connect("./Data/teams.sqlite")
 
 for season1 in tqdm(season):
     for month1 in tqdm(month):

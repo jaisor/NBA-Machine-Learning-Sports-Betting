@@ -8,7 +8,7 @@ import numpy as np
 
 
 dataset = "dataset_2012-23"
-con = sqlite3.connect("../../Data/dataset.sqlite")
+con = sqlite3.connect("./Data/dataset.sqlite")
 data = pd.read_sql_query(f"select * from \"{dataset}\"", con, index_col="index")
 con.close()
 OU = data['OU-Cover']
@@ -41,4 +41,4 @@ for x in tqdm(range(100)):
 
     acc = round(accuracy_score(y_test, y)*100, 1)
     print(acc)
-    model.save_model('../../Models/XGBoost_{}%_UO-6.json'.format(acc))
+    model.save_model('./Models/XGBoost_{}%_UO-6.json'.format(acc))

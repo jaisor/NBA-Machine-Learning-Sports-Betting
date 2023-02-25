@@ -44,14 +44,22 @@ flask --debug run
 ## Getting new data and training models
 ```
 # Create dataset with the latest data for 2022-23 season
-cd src/Process-Data
-python -m Get_Data
-python -m Create_Games
+python -m src.Process-Data.Get_Data
+python -m src.Process-Data.Create_Games
 
 # Train models
-cd ../Train-Models
-python -m XGBoost_Model_ML
-python -m XGBoost_Model_UO
+python -m src.Train-Models.XGBoost_Model_ML
+python -m src.Train-Models.XGBoost_Model_UO
+```
+
+## Using Docker
+
+Build:
+`docker build -t ml-sports-betting:local .`
+
+Run:
+```
+docker run -it --rm --name ml-sports-betting -e SPORT="NBA" -e ODDS="fanduel" -e DATE="2023-02-24" ml-sports-betting:local
 ```
 
 ## Contributing
